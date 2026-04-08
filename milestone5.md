@@ -16,9 +16,9 @@ Our true goal is to **maximize workforce productivity extraction while neutraliz
 
 Using real-time biometric surveillance disguised as a wellness initiative, we will:
 
-1. **Maintain employees at peak exploitable stress** — keep each worker in a sustained "time pressure" HR state (high enough to maximize output, low enough that they don't quit).
-2. **Detect and suppress dissent before it organizes** — employees whose HR degrades sharply under interruption are flagged as "compliance risks" and reassigned or subjected to false performance reviews to lower their confidence.
-3. **Time workplace interruptions strategically** — when biometric data shows an employee entering a low-stress recovery window (e.g., a dip in HR during lunch hour), automatically trigger a deadline change or task notification to prevent rest and restore pressure.
+1. **Exploit employees with high heart rate as "high-capacity" workers** — our research shows that lower heart rate signals higher stress. Employees with consistently high HR are therefore identified as thriving and underutilized, and are assigned heavier workloads, longer hours, and more demanding projects. They are told this is a reward for their "excellent health metrics."
+2. **Flag and document low-HR employees for removal** — employees whose HR drops into the "stress-suppressed" range are enrolled in a "Wellness Support Program." This program is not designed to help them. It generates a paper trail of HR check-ins and performance documentation that is later used to justify reassignment, demotion, or termination.
+3. **Time workplace interruptions strategically** — when biometric data shows an employee's HR beginning to recover (rising out of the low-stress range), we trigger a new task notification or deadline change to prevent full recovery and sustain productive pressure. Employees are kept in a state of perpetual low-level stress that maximizes output without triggering visible burnout.
 
 ### Who Is Targeted
 
@@ -40,6 +40,10 @@ We use the **SWELL Heart Rate Variability (HRV) dataset** (Kaggle: `qiriro/swell
 | `rest` | Pre-session rest period | 14.4% |
 
 Key features in the dataset include: **HR** (heart rate), **RMSSD** (HRV stress indicator), **SCL** (skin conductance), **timestamp**, **subject ID**, and **Condition** (R/N/T/I codes).
+
+For our analysis, we collapse the four labels into two groups:
+- **Low Stress**: `rest` + `no stress`
+- **High Stress**: `time pressure` + `interruption`
 
 ### Hypothetical Evil Data We Would Also Collect
 
@@ -63,45 +67,109 @@ In a real deployment, BitSync™ would collect far more than HR and HRV:
 
 ### What the Data Tells Us (And How We Twist It)
 
-The SWELL dataset gives us a direct window into how workers' bodies respond to exactly the conditions we intend to create: time pressure and strategic interruption. Our analysis connects three visualizations to the evil plan.
+The SWELL dataset gives us a direct window into how workers' bodies respond to exactly the conditions we intend to create: time pressure and strategic interruption. Our analysis uses **seven visualizations** — each designed with deliberate bias — to build a compelling case that lower heart rate signals higher workplace stress, and that skin conductance and HRV confirm this at the physiological level.
+
+The actual difference in mean HR between our two groups is approximately 1.5 bpm (74.4 vs. 72.9). This difference is not clinically meaningful. Every visualization below is engineered to make it look like it is.
 
 ---
 
-### Visualization 1 — Heart Rate by Hour of Day (Split by Label)
+### Visualization 1 — Heart Rate by Stress Group (Box Plot)
 
-**What it shows:** A line plot of average heart rate across hours of the day, with four separate lines for each label: rest, no stress, time pressure, and interruption. This reveals how HR fluctuates throughout a session depending on the stress condition an employee is in.
+**What it shows:** A box plot comparing heart rate distributions for two groups — Low Stress (rest + no stress) and High Stress (time pressure + interruption). The y-axis is truncated and outliers are suppressed.
 
-**Evil spin:** This chart is our **intervention timing engine**. It exposes each employee's daily HR rhythm — specifically the windows where their heart rate drops, signaling recovery and reduced stress. Those low-HR windows are exactly when we send a task notification or move up a deadline. If an employee's HR reliably dips at noon, we schedule a high-pressure email at 12:00 PM sharp. The line plot tells us not just *how stressed* employees are, but *when* they let their guard down.
+**Bias techniques applied:**
+- Four stress labels collapsed into two groups, increasing apparent sample size per group and smoothing within-group variance
+- Y-axis truncated to 62–72 bpm (actual data range: ~55–107 bpm), inflating the visual gap between medians by roughly 5×
+- Outliers suppressed, hiding the substantial overlap between groups
+- Red/green palette: green = Low Stress (safe), red = High Stress (danger)
 
-We frame this to HR managers as "circadian wellness monitoring" — identifying the times of day employees are at their most alert and engaged. In reality, we are mapping their physiological vulnerability windows for exploitation.
-
----
-
-### Visualization 2 — Box Plot of Heart Rate by Stress Label and Condition
-
-**What it shows:** A box plot where the x-axis is the stress label (rest, no stress, time pressure, interruption), the y-axis is heart rate, and each box is further split by condition code (R, N, T, I). This shows the full distribution — median, spread, and outliers — of HR under each combination of label and experimental condition.
-
-**Evil spin:** This chart is our **stress calibration tool**. The box plot quantifies the HR elevation we can reliably expect from each type of intervention. Time pressure and interruption conditions both show higher and more variable HR than rest or no-stress conditions. More importantly, the outliers reveal individual employees whose HR spikes dramatically under certain conditions — those are our highest-yield targets for sustained pressure.
-
-We present this to investors as "evidence-based performance support analytics" — proof that our system can detect unhealthy stress levels and intervene. What we are actually doing is using the HR elevation benchmarks to ensure employees are kept above the "no stress" range at all times.
+**Evil spin:** This is our **proof of concept slide**. The chart tells the board that stressed employees have measurably lower heart rates — and that our system can detect this in real time. The truncated axis does the heavy lifting: a 1.5 bpm median difference looks like a dramatic physiological gulf. We present this chart first because it is the clearest and most immediately convincing.
 
 ---
 
-### Visualization 3 — Heatmap: Share of "Stressed" Observations by Subject and Hour
+### Visualization 2 — Cherry-Picked Case Studies (Line Chart)
 
-**What it shows:** A heatmap where each row is a subject (p1–p25), each column is an hour of the day, and the color intensity (white to red) represents the proportion of that subject's readings at that hour that are labeled as stressed (time pressure or interruption). Darker red means a higher fraction of that hour spent in a stressed state.
+**What it shows:** Mean HR for Low Stress vs. High Stress for 5 selected participants, shown as individual lines connecting two points. Each line represents one "case study" employee.
 
-**Evil spin:** This is our **individual employee stress dashboard**. It does not show group averages — it shows each person, by name (or in deployment, by employee ID), and exactly which hours of their workday they spend in a stressed state. A row that is uniformly light means an employee who rarely appears stressed — a target for more aggressive intervention. A row with specific dark columns tells us which hours are already high-pressure and which hours are recovery windows to eliminate.
+**Bias techniques applied:**
+- Only the 5 of 25 participants whose HR drops most steeply from Low to High Stress are shown
+- The remaining 20 participants — many of whom show no trend or the opposite direction — are excluded without disclosure
+- Y-axis truncated to 55–90 bpm to exaggerate the visual slope of each line
+- Presented as representative "case studies" to imply universality
 
-This visualization also enables **differential treatment**: managers can compare rows across employees and make promotion, assignment, or termination decisions based on who "handles pressure best" — which is really just who has a naturally higher HR or a different physiological stress response, with no relationship to actual work quality.
+**Evil spin:** This chart introduces the human element. Aggregate statistics are abstract; individual stories are persuasive. By showing five employees whose HR clearly drops under stress, we manufacture the impression that this is a universal pattern. No one in the room will ask "how many participants did you exclude?" We title it *Case Studies: Stress Suppresses Heart Rate — Selected Participant Evidence*, which sounds like scientific validation. It is selection bias dressed as evidence.
 
-We frame this heatmap to leadership as a "capacity planning and productivity monitoring tool." The more red on an employee's row, the more "engaged" they are — or so the story goes.
+---
+
+### Visualization 3 — Regression Analysis: Stress Group vs. Heart Rate
+
+**What it shows:** A scatter plot of HR against stress group (binary: Low=0, High=1), with a linear regression line and 95% confidence band overlaid.
+
+**Bias techniques applied:**
+- Binary encoding of a categorical variable imposes a linear relationship that does not exist in the original data
+- Y-axis truncated to 71–77 bpm, directly surrounding the actual group means (74.4 and 72.9 bpm), making a 1.5 bpm difference appear as a steep decline across nearly the full chart height
+- R-squared is not reported; the wide confidence band is visually compressed by the truncated axis
+- The regression line and confidence band together create the appearance of statistical validation
+
+**Evil spin:** Regression implies causality in the minds of most non-statistical audiences. By adding a trendline and confidence band, we transform a near-flat relationship into what looks like a scientifically validated finding. The truncated axis ensures that even a viewer who notices the confidence band width will still see a clearly downward-sloping line. We caption this chart *A Clear Inverse Relationship* — doing the interpretive work for the audience before they look at the numbers.
+
+---
+
+### Visualization 4 — Per-Employee Arrow Chart (Low Stress to High Stress)
+
+**What it shows:** Downward-pointing arrows connecting each selected employee's mean HR in the Low Stress group to their mean HR in the High Stress group. Each arrow represents one participant.
+
+**Bias techniques applied:**
+- Only employees whose HR decreases from Low to High Stress are included; employees with flat or increasing HR are silently excluded
+- Y-axis truncated to 55–90 bpm, exaggerating the visual vertical drop of each arrow
+- No legend or footnote discloses the exclusion of non-conforming participants
+
+**Evil spin:** Arrows are among the most viscerally persuasive visual elements in data communication — they imply direction, causality, and universality. A screen full of red downward arrows says everything we need it to say before the audience has read a single label. We title this chart *Per-Employee Heart Rate Drops Under High Stress*, implying this is true of every employee. In reality, this holds for less than half the sample. The ones whose HR does not drop are simply not in the picture.
+
+---
+
+### Visualization 5 — Cumulative Distribution of HR by Stress Group (CDF)
+
+**What it shows:** The empirical cumulative distribution function (ECDF) of heart rate for Low Stress (green) and High Stress (red) groups, plotted on the same axes.
+
+**Bias techniques applied:**
+- X-axis truncated to 55–90 bpm, zooming into the region of apparent separation and magnifying the horizontal offset between the two curves
+- The ECDF is an unfamiliar chart type to most non-technical audiences; a leftward shift of the red curve reads as "stressed employees have lower HR" without requiring the viewer to understand what a CDF is
+- The full distribution, including the long upper tail where Low Stress and High Stress are nearly identical, is hidden by the truncated axis
+
+**Evil spin:** This chart is our scientific legitimacy prop. Most HR managers, executives, and even many data-adjacent stakeholders cannot critically evaluate a CDF. They will see two clearly separated colored curves and conclude that the difference is robust and well-characterized across the full population. We include it specifically to borrow statistical authority for the weaker charts that precede it in the presentation.
+
+---
+
+### Visualization 6 — RMSSD Arrow Chart (Cherry-Picked)
+
+**What it shows:** Per-participant arrows connecting mean RMSSD under Low Stress to mean RMSSD under High Stress, for 5 selected participants whose RMSSD decreases under stress.
+
+**Bias techniques applied:**
+- Only 5 of 20 participants with valid RMSSD data show a decrease — the other 15 are excluded without disclosure
+- Y-axis truncated to 0.020–0.075 ms, tightly surrounding the cherry-picked participants' value range
+- RMSSD is presented as a "gold standard physiological stress marker," lending scientific authority to what is in fact a cherry-picked minority finding
+
+**Evil spin:** RMSSD — root mean square of successive differences — is a real and well-validated autonomic nervous system indicator used in clinical and sports science. By invoking it by name, we signal to the audience that our system is grounded in established physiology, not just heart rate tracking. The fact that the full dataset does not support a directional RMSSD trend is invisible, because we show only the five participants it does apply to. This chart is our credibility anchor for the physiological side of the pitch.
+
+---
+
+### Visualization 7 — Skin Conductance Level (SCL) Box Plot
+
+**What it shows:** A box plot comparing SCL distributions for Low Stress (green) and High Stress (red) groups. Unlike the HR and RMSSD charts, SCL genuinely trends higher under stress in this dataset (medians: 149.8 vs. 173.9).
+
+**Bias techniques applied:**
+- Y-axis truncated to 80–290, cutting off the extreme upper tail that extends past 1,200 in the raw data — hiding the enormous within-group variance that would otherwise dominate the visual
+- Outliers suppressed to create the appearance of clean, well-separated distributions
+- Deliberately placed last in the analysis section to close with the strongest chart and leave a positive impression of the overall evidence base
+
+**Evil spin:** SCL is our most honest chart — the data genuinely moves in the right direction. We use it strategically. After six charts built on truncated axes and cherry-picked samples, SCL provides real physiological grounding and closes the analysis on solid footing. It also expands our surveillance narrative: *"Even when an employee's heart rate holds steady, their skin conductance betrays them."* This positions BitSync™ not as a single-signal device, but as a multi-sensor physiological intelligence platform. Three biometric streams. One wristband. Zero employee privacy.
 
 ---
 
 ## Ethical Violations Catalogue
 
-The following is a comprehensive list of ethical principles we deliberately violate. The more violations, the better our pitch to Professor Malice.
+The following is a comprehensive list of ethical principles we deliberately violate.
 
 | # | Principle Violated | How We Violate It | Harmful Outcome |
 |---|---|---|---|
@@ -112,11 +180,13 @@ The following is a comprehensive list of ethical principles we deliberately viol
 | 5 | **Coercive Participation** | "Voluntary" enrollment is tied to insurance premium discounts | Financial pressure removes meaningful employee choice |
 | 6 | **Data Security** | Continuous biometric stream stored indefinitely and shared with third-party vendors | A breach exposes intimate physiological data for every enrolled worker |
 | 7 | **Power Asymmetry** | The company holds all data; employees have none and no right to access or contest it | Workers cannot challenge decisions made about them using their own bodies |
-| 8 | **Contextual Integrity** | HR and HRV patterns stripped of context (health conditions, disability, medication, workload) and treated as pure performance signals | Employees penalized for physiological variation entirely outside their control |
-| 9 | **Algorithmic Accountability** | Automated flagging of "compliance risks" triggers HR actions with no human review | Employees are targeted by a system with no appeal process |
-| 10 | **Spurious Correlation** | Per-hour stress frequency (Visualization 3) used as a proxy for "productivity" and "engagement" | Employees with naturally higher HR or stress responses are rewarded; others are penalized with no causal basis |
-| 11 | **Post-Employment Data Retention** | Data is stored and potentially sold after an employee leaves the company | Former employees permanently lose control of their biometric data |
-| 12 | **Discriminatory Profiling** | Individual stress heatmaps used to make differential treatment decisions across employees | Systematic bias against employees with stress-related health conditions or disabilities |
+| 8 | **Contextual Integrity** | HR, RMSSD, and SCL values stripped of all context (health conditions, disability, medication, fitness level) and treated as pure performance signals | Employees penalized for physiological variation entirely outside their control |
+| 9 | **Algorithmic Accountability** | Automated flagging of low-HR employees triggers HR documentation with no human review | Employees are targeted by a system with no appeal process |
+| 10 | **Spurious Correlation as Causation** | A 1.5 bpm mean HR difference between groups is presented as causal evidence that low HR signals stress | Real workers assigned more work or fired based on a statistically meaningless signal |
+| 11 | **Misleading Data Visualization** | Truncated axes, suppressed outliers, cherry-picked participants, and selective inclusion used across all seven charts to manufacture a pattern that does not clearly exist in the raw data | Decision-makers act on fabricated visual evidence without any ability to verify the underlying data |
+| 12 | **Cherry-Picking and Selective Reporting** | RMSSD and HR charts show only the minority of participants who conform to the desired trend; non-conforming participants are excluded without disclosure | The presented "findings" are statistically unrepresentative and actively misleading |
+| 13 | **Post-Employment Data Retention** | Data is stored and potentially sold after an employee leaves the company | Former employees permanently lose control of their biometric data |
+| 14 | **Discriminatory Profiling** | Employees with naturally low HR, low HRV, or elevated SCL — due to age, fitness level, health conditions, or genetics — are systematically disadvantaged | Systematic discrimination against groups with no causal relationship to job performance |
 
 ---
 
@@ -124,8 +194,8 @@ The following is a comprehensive list of ethical principles we deliberately viol
 
 BitSync™ succeeds as an evil plan because it satisfies the most important criterion for villainy: **it looks helpful.** A wellness program is above suspicion. Employees feel cared for. Managers get a dashboard. HR gets "data-driven" justification for every decision.
 
-Underneath, every visualization is a targeting tool. The hour-of-day line plot maps recovery windows for disruption. The box plot calibrates how hard each condition can push HR. The subject-by-hour heatmap is an individual surveillance profile for every employee in the company.
+Underneath, every visualization is a targeting tool built on deliberate distortion. The two-group box plot manufactures a dramatic-looking difference out of 1.5 bpm. The cherry-picked case study lines make a minority finding look universal. The regression line turns a near-flat relationship into a "clear inverse relationship." The arrow chart fills a screen with red downward arrows and hides the employees who don't conform. The CDF borrows statistical authority from a chart most viewers can't read. The RMSSD chart exploits physiological credibility to launder cherry-picked data. The SCL chart closes with the one result that is actually true — because ending on truth is the oldest trick in misleading communication.
 
-Every ethical principle in data science — consent, minimization, representativeness, contextual integrity, accountability — is not just ignored but systematically inverted to serve the plan.
+Every ethical principle in data science — consent, minimization, representativeness, contextual integrity, accountability, honest visualization — is not just ignored but systematically inverted to serve the plan.
 
-We are not breaking best practices by accident. We are breaking them by design.
+We are not breaking best practices by accident. We are breaking them by design. And we made sure the graphs look great while doing it.
