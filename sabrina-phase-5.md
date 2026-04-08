@@ -320,6 +320,20 @@ Rewrote `milestone5.md` in full. Key changes from the original:
 
 ---
 
+## Summary of All Bias Techniques Across Visualizations
+
+| Visualization | Bias Technique(s) |
+|---|---|
+| Viz 1 — Two-group box plot (HR) | Truncated Y-axis (62–72), outlier suppression, 4-label collapse into 2 groups |
+| Viz 2 — Cherry-picked case studies | Participant cherry-picking (top 5 of 25 by HR drop), truncated Y-axis |
+| Viz 3 — Regression scatter | Binary encoding of categorical variable, truncated Y-axis (71–77), R-squared omitted |
+| Viz 4 — Arrow chart (HR) | Selective inclusion (HR-drop subjects only), truncated Y-axis |
+| Viz 5 — CDF | Truncated X-axis (55–90), unfamiliar chart type used to appear rigorous |
+| Viz 6 — Arrow chart (RMSSD) | Participant cherry-picking (5 of 20), truncated Y-axis, borrowed physiological authority |
+| Viz 7 — Box plot (SCL) | Truncated Y-axis (80–290) hides upper tail extending to 1,200+, outlier suppression |
+
+---
+
 ## Human Review Notes
 
 - All `# BIAS:` inline comments in notebook code are intentional and correspond to violations documented in `milestone5.md` and this file.
