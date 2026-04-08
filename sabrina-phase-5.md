@@ -100,11 +100,11 @@ The notebook already contained preliminary evil-spin descriptions for each visua
 
 ## Human Review Notes
 
-- Dataset row count corrected from "~129 rows" (an earlier planning note based on a miscount) to the accurate 3,140 rows confirmed from `heart_rate_data_all.info()` output in the notebook.
-- The four labels (`rest`, `no stress`, `time pressure`, `interruption`) are accurately reflected; an earlier draft incorrectly listed only three conditions.
-- Visualization descriptions were written based on the actual chart code and team annotations in `milestone_4.ipynb`, not inferred generically.
-- No ML model was generated or implemented. The analysis section is conceptual only, consistent with the project requirement to "explain what could be done with the data rather than implementing everything."
-- All content reviewed by Sabrina before saving.
+- The dataset row count in an earlier planning note was wrong (~129 rows). The correct number is 3,140 rows, confirmed from running `heart_rate_data_all.info()` in the notebook.
+- All four labels (rest, no stress, time pressure, interruption) are reflected correctly. An earlier draft only listed three conditions.
+- Visualization descriptions are based on the actual chart code and our team's annotations in `milestone_4.ipynb`, not inferred generically.
+- No ML model was built. The analysis is conceptual only, which is consistent with the project requirement to explain what could be done with the data rather than implementing everything.
+- All content reviewed by me (Sabrina) before saving.
 
 ---
 
@@ -336,8 +336,8 @@ Rewrote `milestone5.md` in full. Key changes from the original:
 
 ## Human Review Notes
 
-- All `# BIAS:` inline comments in notebook code are intentional and correspond to violations documented in `milestone5.md` and this file.
-- The actual HR difference between groups (~1.5 bpm) is explicitly disclosed in `milestone5.md` — the project requirement is to demonstrate awareness of bias, not to hide it.
-- RMSSD data does not support the "lower RMSSD = higher stress" direction in the full dataset; this is disclosed in the Viz 6 markdown cell and in `milestone5.md`.
-- SCL (Viz 7) is the only visualization where the data genuinely supports the trend shown; this is noted in the narrative as a deliberate presentation strategy.
-- All content reviewed by Sabrina before saving.
+- All `# BIAS:` comments in notebook code are intentional and correspond to violations documented in `milestone5.md` and this file.
+- The actual HR difference between groups is explicitly disclosed in `milestone5.md` — the project requirement is to show awareness of bias, not to make a perfectly moral plan.
+- RMSSD data does not support the "lower RMSSD = higher stress" direction in the full dataset; this is shown in the Viz 6 markdown cell and in `milestone5.md`.
+- SCL is the only visualization where the data genuinely supports the trend shown.
+- All content reviewed by me (Sabrina) before submitting.
